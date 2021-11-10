@@ -1,21 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Testowanie githuba v1.0</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import * as firebase from 'firebase';
+import { initializeApp } from 'firebase/app';
+
+import LandingScreen from './components/auth/Landing'
+import Register from './components/auth/Register'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7rkL21Zmcx3E8OmBRiYYgDrqs8OWJrlI",
+  authDomain: "instaappclone-a89ba.firebaseapp.com",
+  projectId: "instaappclone-a89ba",
+  storageBucket: "instaappclone-a89ba.appspot.com",
+  messagingSenderId: "849559175975",
+  appId: "1:849559175975:web:545d174cfa52d00720df02",
+  measurementId: "G-7SZTCHWF51"
+};
+
+if (firebase.apps.length === 0 ){
+  firebase.initializeApp(firebaseConfig)
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createStackNavigator();
+export default function App() {
+  return (
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Landing">
+          <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false}}/>
+          <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
+
+        </Stack.Navigator>
+
+    </NavigationContainer>
+ 
+  );
+}
