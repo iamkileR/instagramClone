@@ -3,7 +3,7 @@ import firebase from "firebase";
 
 export function fetchUser(){
     return((dispatch) => {
-        firebase.frestore()
+        firebase.firestore()
             .collection("user")
             .doc(firebase.auth().currentUser.uid)
             .get()

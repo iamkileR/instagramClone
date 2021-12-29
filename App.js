@@ -7,7 +7,7 @@ import firebase from 'firebase';
 
 import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
-import MainScreen, { Main } from './components/Main'
+import MainScreen from './components/Main'
 import {View, Text } from 'react-native';
 
 import { Provider } from 'react-redux'
@@ -48,8 +48,7 @@ export class App extends Component {
         this.setState({
           loggedIn: false,
           loaded: true,
-        }
-        )
+        })
       }else {
         this.setState({
         loggedIn: true,
@@ -63,24 +62,21 @@ export class App extends Component {
 
 
   render() {
-    const {loggedIn , loaded} = this.state;
+    const { loggedIn , loaded } = this.state;
     if(!loaded){
       return(
         <View style = {{ flex :1, justifyContent: 'center'}}>
-          <Text>
-            Loading
-          </Text>
-
+          <Text>Loading</Text>
         </View>
       )
     }
     if (!loggedIn){
       return(
         <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
-          <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false}}/>
-          <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
-        </Stack.Navigator>
+          <Stack.Navigator initialRouteName="Landing">
+            <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="Register" component={RegisterScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       );
     }
