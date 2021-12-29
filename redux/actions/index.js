@@ -4,12 +4,12 @@ import firebase from "firebase";
 export function fetchUser(){
     return((dispatch) => {
         firebase.firestore()
-            .collection("user")
+            .collection("users")
             .doc(firebase.auth().currentUser.uid)
             .get()
             .then((snapshot) => {
                 if(snapshot.exist){
-                    console.log(snapshot.data())
+                    console.log(snapshot)
                     dispatch({type: USER_STATE_CHANGE, currentUser: snapshot.data()})
                 }
                 else{
