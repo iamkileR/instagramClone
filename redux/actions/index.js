@@ -8,8 +8,8 @@ export function fetchUser(){
             .doc(firebase.auth().currentUser.uid)
             .get()
             .then((snapshot) => {
-                if(snapshot.exist){
-                    console.log(snapshot)
+                if(snapshot){
+                    //console.log(snapshot.data())
                     dispatch({type: USER_STATE_CHANGE, currentUser: snapshot.data()})
                 }
                 else{

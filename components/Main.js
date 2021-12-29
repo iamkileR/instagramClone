@@ -9,22 +9,29 @@ export class MainScreen extends Component {
         this.props.fetchUser();
     }
     render() {
-        //const { currentUser} = this.props;
+        const { currentUser} = this.props;
 
+        if(currentUser === undefined){
+            return(
+                <View>
+                    <Text> UŻYTKOWNIK NIEZIDENTYFIKOWANY </Text>
+                </View>
+            )
+        }
         return (
             <View style = {{ flex :1, justifyContent: 'center'}}>
                 <Text>
-                    is logged in
+                    {currentUser.name} is logged in
                 </Text>
             </View>
         )
     }
 }
 
-//const mapStateToProps = (store) => ({
-//    currentUser: store.userState.currentUser
-//})
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser
+})
 
 const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser}, dispatch);
 
-export default connect(null, mapDispatchProps)(MainScreen);
+export default connect(mapStateToProps, mapDispatchProps)(MainScreen);
