@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View,Button,Text, TextInput } from 'react-native'
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth'
+import firebase from 'firebase';
 
 
 export class Login extends Component {

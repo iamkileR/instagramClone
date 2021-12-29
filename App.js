@@ -2,23 +2,28 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import firebase from 'firebase/compat/app';
+
+import firebase from 'firebase';
+
 import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
 import {View, Text } from 'react-native';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC7rkL21Zmcx3E8OmBRiYYgDrqs8OWJrlI",
-  authDomain: "instaappclone-a89ba.firebaseapp.com",
-  projectId: "instaappclone-a89ba",
-  storageBucket: "instaappclone-a89ba.appspot.com",
-  messagingSenderId: "849559175975",
-  appId: "1:849559175975:web:545d174cfa52d00720df02",
-  measurementId: "G-7SZTCHWF51"
+  apiKey: "AIzaSyBYb0ZpakjwyECsvha8hCg_QRnpAJ5t_ic",
+  authDomain: "myinstagram-a58c0.firebaseapp.com",
+  projectId: "myinstagram-a58c0",
+  storageBucket: "myinstagram-a58c0.appspot.com",
+  messagingSenderId: "921363982394",
+  appId: "1:921363982394:web:72fd7b308058e42630ed03",
+  measurementId: "G-NVZEM76FKK"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+if(firebase.apps.length === 0){
+  firebase.initializeApp(firebaseConfig)
+}
+
 const Stack = createStackNavigator();
 
 
