@@ -2,29 +2,30 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
-
-import LandingScreen from './components/auth/Landing'
-import RegisterScreen from './components/auth/Register'
-import MainScreen from './components/Main'
 import {View, Text } from 'react-native';
-
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
+
+import LandingScreen from './components/auth/Landing'
+import RegisterScreen from './components/auth/Register'
+import MainScreen from './components/Main'
+import AddScreen from './components/main/Add'
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYb0ZpakjwyECsvha8hCg_QRnpAJ5t_ic",
-  authDomain: "myinstagram-a58c0.firebaseapp.com",
-  projectId: "myinstagram-a58c0",
-  storageBucket: "myinstagram-a58c0.appspot.com",
-  messagingSenderId: "921363982394",
-  appId: "1:921363982394:web:72fd7b308058e42630ed03",
-  measurementId: "G-NVZEM76FKK"
+  apiKey: "AIzaSyBuO32B7vUv29NGQurppP83_YmuGb9jkG8",
+  authDomain: "instatest-3ac8f.firebaseapp.com",
+  projectId: "instatest-3ac8f",
+  storageBucket: "instatest-3ac8f.appspot.com",
+  messagingSenderId: "406184519109",
+  appId: "1:406184519109:web:bc2904edc2d6e0316417ac",
+  measurementId: "G-X3QJEEB970"
 };
 
 if(firebase.apps.length === 0){
@@ -82,7 +83,13 @@ export class App extends Component {
     }
     return(
       <Provider store = {store}>
-        <MainScreen/>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Main">
+           <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
+           <Stack.Screen name="Add" component={AddScreen}/>
+
+        </Stack.Navigator>
+      </NavigationContainer>
       </Provider>
       
     );
