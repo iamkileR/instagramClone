@@ -14,18 +14,19 @@ import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
+import SaveScreen from './components/main/Save'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6tlaFtcgvyqozxbvFqgpVHsATxTUqJSk",
-  authDomain: "insta-781fd.firebaseapp.com",
-  projectId: "insta-781fd",
-  storageBucket: "insta-781fd.appspot.com",
-  messagingSenderId: "92309556321",
-  appId: "1:92309556321:web:407248b6cac19d9fafee20",
-  measurementId: "G-X1MBK0HS6R"
+  apiKey: "AIzaSyBYb0ZpakjwyECsvha8hCg_QRnpAJ5t_ic",
+  authDomain: "myinstagram-a58c0.firebaseapp.com",
+  projectId: "myinstagram-a58c0",
+  storageBucket: "myinstagram-a58c0.appspot.com",
+  messagingSenderId: "921363982394",
+  appId: "1:921363982394:web:72fd7b308058e42630ed03",
+  measurementId: "G-NVZEM76FKK"
 };
 
 if(firebase.apps.length === 0){
@@ -86,8 +87,8 @@ export class App extends Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Main">
            <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
-           <Stack.Screen name="Add" component={AddScreen}/>
-
+           <Stack.Screen name="Add" component={AddScreen} navigation={this.props.navigation}/>
+           <Stack.Screen name="Save" component={SaveScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
       </Provider>
