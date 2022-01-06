@@ -8,7 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 export default function Add( {navigation} ) {
     const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
-    const [camera, setCamera] = useState(null);
+    //const [camera, setCamera] = useState(null);
+    const camera = useRef(null)
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
 
@@ -55,7 +56,7 @@ export default function Add( {navigation} ) {
         <View style={{flex:1}}>
             <View style={styles.cameraContainer}>
                 <Camera
-                    ref={ref => setCamera(ref)}
+                    ref={ camera }
                     style={styles.fixedRatio}
                     type={type}
                     ratio={'1:1'} />
