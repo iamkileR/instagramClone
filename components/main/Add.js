@@ -9,7 +9,7 @@ export default function Add( {navigation} ) {
     const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     //const [camera, setCamera] = useState(null);
-    const camera = useRef(null)
+    const cameraRef = useRef(null)
     const [image, setImage] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
 
@@ -24,8 +24,8 @@ export default function Add( {navigation} ) {
     }, []);
 
     const takePicture = async () => {
-        if(camera){
-            const data = await camera.takePictureAsync(null);
+        if(cameraRef){
+            const data = await cameraRef.current.takePictureAsync(null);
             setImage(data.uri);
         }
     }
@@ -56,7 +56,8 @@ export default function Add( {navigation} ) {
         <View style={{flex:1}}>
             <View style={styles.cameraContainer}>
                 <Camera
-                    ref={ camera }
+                    ref={ cameraRef }
+                    //ref={ref => setCamera(ref)}
                     style={styles.fixedRatio}
                     type={type}
                     ratio={'1:1'} />
