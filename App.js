@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
-import {View, Text } from 'react-native';
+import {View, ImageBackground } from 'react-native';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
@@ -12,6 +12,7 @@ import thunk from 'redux-thunk'
 
 import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
+import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
@@ -20,13 +21,13 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6tlaFtcgvyqozxbvFqgpVHsATxTUqJSk",
-  authDomain: "insta-781fd.firebaseapp.com",
-  projectId: "insta-781fd",
-  storageBucket: "insta-781fd.appspot.com",
-  messagingSenderId: "92309556321",
-  appId: "1:92309556321:web:407248b6cac19d9fafee20",
-  measurementId: "G-X1MBK0HS6R"
+  apiKey: "AIzaSyBYb0ZpakjwyECsvha8hCg_QRnpAJ5t_ic",
+  authDomain: "myinstagram-a58c0.firebaseapp.com",
+  projectId: "myinstagram-a58c0",
+  storageBucket: "myinstagram-a58c0.appspot.com",
+  messagingSenderId: "921363982394",
+  appId: "1:921363982394:web:72fd7b308058e42630ed03",
+  measurementId: "G-NVZEM76FKK"
 };
 
 if(firebase.apps.length === 0){
@@ -67,8 +68,11 @@ export class App extends Component {
     const { loggedIn , loaded } = this.state;
     if(!loaded){
       return(
-        <View style = {{ flex :1, justifyContent: 'center'}}>
-          <Text>Loading</Text>
+        <View style = {{ flex :1, justifyContent: 'center', alignItems:'center'}}>
+          <ImageBackground style={{width: "100%", height: "100%"}} 
+            //resizeMode='cover' 
+            source={require('./logo.png')}>
+          </ImageBackground>
         </View>
       )
     }
@@ -78,6 +82,7 @@ export class App extends Component {
           <Stack.Navigator initialRouteName="Landing">
             <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false}}/>
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );
