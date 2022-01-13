@@ -21,13 +21,12 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYb0ZpakjwyECsvha8hCg_QRnpAJ5t_ic",
-  authDomain: "myinstagram-a58c0.firebaseapp.com",
-  projectId: "myinstagram-a58c0",
-  storageBucket: "myinstagram-a58c0.appspot.com",
-  messagingSenderId: "921363982394",
-  appId: "1:921363982394:web:72fd7b308058e42630ed03",
-  measurementId: "G-NVZEM76FKK"
+  apiKey: "AIzaSyA9JM9Brqag9HOvur165NFGRObdft2uEnY",
+  authDomain: "instaappclone1.firebaseapp.com",
+  projectId: "instaappclone1",
+  storageBucket: "instaappclone1.appspot.com",
+  messagingSenderId: "264166316568",
+  appId: "1:264166316568:web:1feca7eaf427379f59c16d"
 };
 
 if(firebase.apps.length === 0){
