@@ -1,4 +1,4 @@
-import { USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE } from "../constants"
+import { USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, CLEAR_DATA } from "../constants"
 
  const initialState = {
      users: [],
@@ -7,12 +7,12 @@ import { USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE } from "../constants"
 
  export const users = (state = initialState, action) => {
      switch (action.type) {
-         case USERS_DATA_STATE_CHANGE:
+        case USERS_DATA_STATE_CHANGE:
              return {
                  ...state,
                  users: [...state.users, action.user]
              }
-         case USERS_POSTS_STATE_CHANGE:
+        case USERS_POSTS_STATE_CHANGE:
              return {
                  ...state,
                  usersLoaded: state.usersLoaded + 1,
@@ -21,6 +21,9 @@ import { USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE } from "../constants"
                      user
                  )
              }
+        case CLEAR_DATA:
+            return initialState  
+                
 
          default:
              return state;
