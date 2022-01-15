@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
@@ -70,7 +69,6 @@ export class App extends Component {
       return(
         <View style = {{ flex :1, justifyContent: 'center', alignItems:'center'}}>
           <ImageBackground style={{width: "100%", height: "100%"}} 
-            //resizeMode='cover' 
             source={require('./logo.png')}>
           </ImageBackground>
         </View>
@@ -89,14 +87,40 @@ export class App extends Component {
     }
     return(
       <Provider store = {store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-           <Stack.Screen name="Main" component={MainScreen}/>
-           <Stack.Screen name="Add" component={AddScreen} navigation={this.props.navigation}/>
-           <Stack.Screen name="Save" component={SaveScreen} navigation={this.props.navigation}/>
-           <Stack.Screen name="Comment" component={CommentScreen} navigation={this.props.navigation}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator>
+          <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+              switch (routeName) {
+                case 'Camera': {
+                  return {
+                    headerTitle: 'Camera',
+                  };
+                }
+                case 'Profile': {
+                  return {
+                    headerTitle: 'Profile',
+                  };
+                }
+                case 'Search': {
+                  return {
+                    headerTitle: 'Search',
+                  };
+                }
+                case 'Feed':
+                default: {
+                  return {
+                    headerTitle: 'Instagram',
+                  };
+                }
+              }
+            }}
+            />
+            <Stack.Screen key={Date.now()} name="Add" component={AddScreen} navigation={this.props.navigation}/>
+            <Stack.Screen key={Date.now()} name="Save" component={SaveScreen} navigation={this.props.navigation}/>
+            <Stack.Screen key={Date.now()} name="Comment" component={CommentScreen} navigation={this.props.navigation}/>
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
       
     );
