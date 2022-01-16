@@ -88,38 +88,35 @@ export class App extends Component {
     return(
       <Provider store = {store}>
         <NavigationContainer>
+          <View style={{flex: 1, backgroundColor: '#000'}}>
           <Stack.Navigator>
-          <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
-              const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
-              switch (routeName) {
-                case 'Camera': {
-                  return {
-                    headerTitle: 'Camera',
-                  };
+            <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
+                const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+                switch (routeName) {
+                  case 'Profile': {
+                    return {
+                      headerTitle: 'Profile',
+                    };
+                  }
+                  case 'Search': {
+                    return {
+                      headerTitle: 'Search',
+                    };
+                  }
+                  case 'Feed':
+                  default: {
+                    return {
+                      headerTitle: 'Instagram',
+                    };
+                  }
                 }
-                case 'Profile': {
-                  return {
-                    headerTitle: 'Profile',
-                  };
-                }
-                case 'Search': {
-                  return {
-                    headerTitle: 'Search',
-                  };
-                }
-                case 'Feed':
-                default: {
-                  return {
-                    headerTitle: 'Instagram',
-                  };
-                }
-              }
-            }}
-            />
+              }}
+              />
             <Stack.Screen key={Date.now()} name="Add" component={AddScreen} navigation={this.props.navigation}/>
             <Stack.Screen key={Date.now()} name="Save" component={SaveScreen} navigation={this.props.navigation}/>
             <Stack.Screen key={Date.now()} name="Comment" component={CommentScreen} navigation={this.props.navigation}/>
           </Stack.Navigator>
+          </View>
         </NavigationContainer>
       </Provider>
       

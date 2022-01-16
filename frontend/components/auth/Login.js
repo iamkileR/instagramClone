@@ -1,64 +1,48 @@
-import React, { Component } from 'react'
-import { View,Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import React, { useState } from 'react'
+import { View,Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, KeyboardAvoidingView} from 'react-native'
 import firebase from 'firebase';
 
 
-export class Login extends Component {
-    constructor(props){
-        super(props);
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-        this.state = {
-            email: '',
-            password: '',
-        }
-        this.onSignUp = this.onSignUp.bind(this)
+    const onSignUp = () => {
+        firebase.auth().signInWithEmailAndPassword(email, password)
     }
 
-    onSignUp(){
-        const { email, password} = this.state;
-        firebase.auth().signInWithEmailAndPassword(email,password)
-        .then((result) => {
-            console.log(result)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
-
-
-    render() {
         return (
-                <View>
+                <KeyboardAvoidingView>
                     <ImageBackground style={ styles.logo } 
-                        //resizeMode='cover' 
                         source={require('./image/login.png')}>
                     </ImageBackground>
                     <View style={{paddingTop: 30}}>
                         <TextInput
                             style={styles.input}
                             placeholder = "E-mail..."
-                            onChangeText={(email) => this.setState( {email} )}
+                            keyboardType='email-address'
+                            onChangeText={(email) => setEmail(email)}
                         
                         />
                         <TextInput
                             style={styles.input}
                             placeholder = "Password..."
                             secureTextEntry={true}
-                            onChangeText={(password) => this.setState( {password} )}
+                            onChangeText={(password) => setPassword(password)}
                             
                         />
                     </View>
                     <View style = {styles.viewButton}>
                         <TouchableOpacity 
                             style = {styles.touchButton}
-                            onPress= {() => this.onSignUp()}>
+                            onPress= {() => onSignUp()}>
                             <Text style={styles.buttonText}> Log In </Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
 
         )
-    }
+    
 }
 
 const styles = StyleSheet.create({
@@ -92,5 +76,3 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
 });
-
-export default Login

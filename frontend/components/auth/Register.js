@@ -1,83 +1,119 @@
-import React, { Component } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import React, {  useState } from 'react'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, KeyboardAvoidingView, ScrollView } from 'react-native'
 import firebase from 'firebase';
+require('firebase/firestore');
+import { Snackbar } from 'react-native-paper';
+//import { ScrollView } from 'react-native-gesture-handler';
 
 
-export class Register extends Component {
-    constructor(props){
-        super(props);
+export default function Register() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [isValid, setIsValid] = useState(true);
 
-        this.state = {
-            email: '',
-            password: '',
-            name: ''
+    const onRegister = () => {
+        if (name.length == 0 || username.length == 0 || email.length == 0 || password.length == 0) {
+            setIsValid({ bool: true, boolSnack: true, message: "Please fill out everything" })
+            return;
         }
-        this.onSignUp = this.onSignUp.bind(this)
+        if (password.length < 6) {
+            setIsValid({ bool: true, boolSnack: true, message: "passwords must be at least 6 characters" })
+            return;
+        }
+        if (password.length < 6) {
+            setIsValid({ bool: true, boolSnack: true, message: "passwords must be at least 6 characters" })
+            return;
+        }
+        firebase.firestore()
+            .collection('users')
+            .where('username', '==', username)
+            .get()
+            .then((snapshot) => {
+
+                if (!snapshot.exist) {
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .then(() => {
+                            if (snapshot.exist) {
+                                return
+                            }
+                            firebase.firestore().collection("users")
+                                .doc(firebase.auth().currentUser.uid)
+                                .set({
+                                    name,
+                                    email,
+                                    username,
+                                    image: 'default'
+                                })
+                        })
+                        .catch(() => {
+                            setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
+                        })
+                }
+            }).catch(() => {
+                setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
+            })
+
     }
 
-    
-    onSignUp(){
-        const { email, password, name} = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email,password)
-        .then((result) => {
-            firebase.firestore().collection("users")
-                .doc(firebase.auth().currentUser.uid)
-                .set({
-                    name,
-                    email
-                })
-            console.log(result)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
-
-
-
-    render() {
         return (
-            <View>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}} keyboardVerticalOffset={60}>
+                <ScrollView>
                 <ImageBackground style={ styles.logo } 
-                    //resizeMode='cover' 
                     source={require('./image/login.png')}>
                 </ImageBackground>
                 <View style={{paddingTop: 30}}>
-                    <TextInput
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Username..."
+                            value={username}
+                            onChangeText={(username) => setUsername(username)}
+                        />
+                        <TextInput
                             style={styles.input}
                             placeholder = "Name..."
-                            onChangeText={(name) => this.setState( {name} )}
+                            onChangeText={(name) => setName(name)}
                             
                         /> 
                         <TextInput
                             style={styles.input}
                             placeholder = "E-mail..."
-                            onChangeText={(email) => this.setState( {email} )}
+                            keyboardType='email-address'
+                            onChangeText={(email) => setEmail(email)}
                         
                         />
                         <TextInput
                             style={styles.input}
                             placeholder = "Password..."
                             secureTextEntry={true}
-                            onChangeText={(password) => this.setState( {password} )}
+                            keyboardType='visible-password'
+                            onChangeText={(password) => setPassword(password)}
                             
                         />
                 </View>
                 <View style = {styles.viewButton}>
                     <TouchableOpacity 
                         style = {styles.touchButton}
-                        onPress= {() => this.onSignUp()}>
+                        onPress= {() => onRegister()}>
                         <Text style={styles.buttonText}> Sign Up </Text>
                     </TouchableOpacity>
                 </View>
-                </View>
+                <Snackbar
+                    style={{justifyContent: 'center'}}
+                    visible={isValid.boolSnack}
+                    duration={2000}
+                    onDismiss={() => { setIsValid({ boolSnack: false }) }}>
+                    {isValid.message}
+                </Snackbar>
+                </ScrollView>
+            </KeyboardAvoidingView>
         )
-    }
 }
 
 const styles = StyleSheet.create({
     logo: {
-        marginTop: "20%",
+        marginTop: "5%",
         width: "100%",
         height: 80,
     },
@@ -105,5 +141,3 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
 });
-
-export default Register

@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, FlatList, Button, TextInput} from 'react-native'
+import {View, Text, FlatList, Button, TextInput, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native'
 import firebase  from 'firebase'
 require('firebase/firestore')
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchUsersData } from '../../redux/actions/index'
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function Comment(props) {
     //sekcja komentarzy
@@ -72,7 +73,8 @@ function Comment(props) {
     }
 
     return (
-        <View>
+        <View style={{flex: 1}}>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}} keyboardVerticalOffset={60}>
             <FlatList
                 numColumns={1}
                 horizontal={false}
@@ -80,30 +82,63 @@ function Comment(props) {
                 renderItem={({ item }) =>(
                     <View>
                         {item.user !== undefined ? 
-                        <Text>
-                            
-                            {item.user.name}
-                        </Text>
-                        : null}
-                        <Text>{item.text}</Text>
+                            <View style={styles.icons}>
+                                {item.user.image == 'default' ?
+                                    (
+                                        <FontAwesome5
+                                            name="user-circle" size={35} color="black" />
+                                    )
+                                    :
+                                    (
+                                        <FontAwesome5
+                                            name="user-circle" size={35} color="black" />
+                                    )
+                                }
+                                <View>
+                                    <Text>
+                                        <Text style={styles.userText}> 
+                                            {item.user.name}
+                                        </Text>
+                                        {" "} {item.text}
+                                    </Text>
+                                </View>
+                            </View>
+                            : null }
+
                     </View>
                 )}
 
             />
-            <View>
-                <TextInput 
-                    placeholder='comments...'
-                    onChangeText={(text) => setText(text)}/>
-                <Button 
-                    onPress={() => onCommentSend()}
-                    title="Send"
-                />
-            </View>
+                    <TextInput 
+                        style={styles.inputText}
+                        placeholder='comments...'
+                        multiline={true}
+                        onChangeText={(text) => setText(text)}/>
+                    <Button 
+                        onPress={() => onCommentSend()}
+                        title="Send"
+                    />
+            </KeyboardAvoidingView>
 
         </View>
     )
 }
 
+const styles = StyleSheet.create({
+    icons:{
+        flexDirection: 'row'
+    },
+    userText:{
+        fontSize: 14,
+        fontWeight: "bold",
+    },
+    inputText: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        paddingBottom: 10
+    }
+})
 
 const mapStateToProps = (store) => ({
     users: store.usersState.users

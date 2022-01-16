@@ -1,4 +1,5 @@
 import React from 'react'
+import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default function Landing({ navigation }) {
@@ -21,6 +22,7 @@ export default function Landing({ navigation }) {
               </TouchableOpacity>
           </View>
         </ImageBackground>
+        <StatusBar style="dark"/> 
       </View>
     )
 }

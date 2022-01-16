@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native'
 import firebase from 'firebase';
 require('firebase/firestore');
 
@@ -23,7 +23,7 @@ export default function Search(props){
     }
 
     return(
-        <View>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}}>
             <TextInput
                 style={styles.input}
                 placeholder='Search...'
@@ -42,7 +42,7 @@ export default function Search(props){
                     
                 )}
              />
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
