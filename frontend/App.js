@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import {View, ImageBackground } from 'react-native';
 import { Provider } from 'react-redux'
@@ -89,7 +88,7 @@ export class App extends Component {
       <Provider store = {store}>
         <NavigationContainer>
           <View style={{flex: 1, backgroundColor: '#000'}}>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Main">
             <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
                 const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
                 switch (routeName) {

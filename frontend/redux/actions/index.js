@@ -8,6 +8,15 @@ export function clearData() {
     })
 }
 
+export function reload() {
+    return ((dispatch) => {
+        dispatch(clearData())
+        dispatch(fetchUser())
+        dispatch(fetchUserPosts())
+        dispatch(fetchUserFollowing())
+    })
+}
+
 
 export function fetchUser() {
     return ((dispatch) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, Text, Image, FlatList, Button } from 'react-native'
+import * as Updates from 'expo-updates';
 
 import firebase from 'firebase';
 require("firebase/firestore")
@@ -74,8 +75,9 @@ function Profile(props) {
             .delete()
     }
 
-    const onLogout = () => {
+    const onLogout = async () => {
         firebase.auth().signOut();
+        Updates.reloadAsync()
     }
 
     if(user === null){
