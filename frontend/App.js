@@ -92,9 +92,10 @@ export class App extends Component {
             <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
                 const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
                 switch (routeName) {
-                  case 'Profile': {
+                  case 'MyProfile': {
                     return {
                       headerTitle: 'Profile',
+                      headerShown: false
                     };
                   }
                   case 'Search': {

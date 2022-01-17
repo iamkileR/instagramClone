@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import {StyleSheet, View, Text, Image, FlatList, Button } from 'react-native'
-import * as Updates from 'expo-updates';
 
 import firebase from 'firebase';
 require("firebase/firestore")
@@ -75,9 +74,8 @@ function Profile(props) {
             .delete()
     }
 
-    const onLogout = async () => {
+    const onLogout = () => {
         firebase.auth().signOut();
-        Updates.reloadAsync()
     }
 
     if(user === null){
@@ -154,4 +152,4 @@ const mapStateToProps = (store) => ({
     following: store.userState.following
 })
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, null)(Profile)

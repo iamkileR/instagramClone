@@ -10,7 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase'
 
 import FeedScreen from './main/Feed'
-import ProfileScreen from './main/Profile'
+import Export from './main/Profile/Export'
 import SearchScreen from './main/Search'
 
 const Tab = createMaterialBottomTabNavigator();
@@ -50,16 +50,12 @@ function Main(props) {
                                 <MaterialCommunityIcons name="plus-box" color={color} size={26}/>
                             )
                         }}/>
-                    <Tab.Screen name="Profile" component={ProfileScreen} navigation={props.navigation}
-                        listeners={({ navigation }) => ({
-                            tabPress: event =>{
-                                event.preventDefault();
-                                navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid})
-                        }})}
+                    <Tab.Screen name="MyProfile" component={Export} navigation={props.navigation}
                         options={{
                             tabBarIcon: ({ color, size }) => (
                                 <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
-                            )
+                            ),
+                            headerShown: false
                         }}/>
                 </Tab.Navigator>
                 <StatusBar style="dark"/>      
