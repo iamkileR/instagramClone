@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native'
+import { Searchbar } from 'react-native-paper';
 import firebase from 'firebase';
 require('firebase/firestore');
 
@@ -24,8 +25,8 @@ export default function Search(props){
 
     return(
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1}}>
-            <TextInput
-                style={styles.input}
+            <Searchbar
+                //style={styles.input}
                 placeholder='Search...'
                 onChangeText={(search) => fetchUsers(search)}
             />
