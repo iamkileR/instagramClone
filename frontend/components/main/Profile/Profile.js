@@ -26,11 +26,12 @@ function Profile(props) {
                 .doc(props.route.params.uid)
                 .get()
                 .then((snapshot) => {
-                    if(snapshot){
-                        setUser(snapshot.data());
-                    }
-                    else{
-                        console.log('Nie istnieje')
+                    if(snapshot.exists){
+                        props.navigation.setOptions({
+                            title: snapshot.data().username,
+                        })
+
+                        setUser({ uid: props.route.params.uid, ...snapshot.data() });
                     }
                 })
             firebase.firestore()
@@ -55,7 +56,7 @@ function Profile(props) {
             setFollowing(false);
         }
 
-    },[props.route.params.uid, props.following])
+    },[props.route.params.uid, props.following, props.currentUser, props.posts])
 
     const onFollow = () => {
         firebase.firestore()
@@ -74,9 +75,9 @@ function Profile(props) {
             .delete()
     }
 
-    const onLogout = () => {
-        firebase.auth().signOut();
-    }
+    //const onLogout = () => {
+    //    firebase.auth().signOut();
+    //}
 
     if(user === null){
         return <View />
@@ -89,24 +90,26 @@ function Profile(props) {
 
                     {props.route.params.uid !== firebase.auth().currentUser.uid ? (
                         <View>
-                            {following ? (
+                            {following ? 
+                            (
                                 <Button
                                     title="Following"
                                     onPress={() => onUnfollow()}
                                 />
-                            ) :
-                                (
-                                    <Button
-                                        title="Follow"
-                                        onPress={() => onFollow()}
-                                    />
+                            ) 
+                            :
+                            (
+                                <Button
+                                    title="Follow"
+                                    onPress={() => onFollow()}
+                                />
                             )}
                         </View>
-                    ) : 
-                        <Button
-                            title="Logout"
-                            onPress={() => onLogout()}
-                        />
+                    ) : null 
+                        //<Button
+                        //    title="Logout"
+                        //    onPress={() => onLogout()}
+                        ///>
                     }
                 </View>
 

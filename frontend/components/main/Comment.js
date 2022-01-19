@@ -13,28 +13,33 @@ function Comment(props) {
     const [postId, setPostId] = useState("")
     //text to komentarz ktory uzytkownik wprowadza
     const [text, setText] = useState("")
+    const [refresh, setRefresh] = useState(false)
 
 
     useEffect(() => {
-        function matchUserToComment(comments){
-            for (let i = 0; i < comments.length; i++){
-                if(comments[i].hasOwnProperty('user')){
-                    continue;
-                }
+        getComments();
+    }, [props.route.params.postId, props.users, refresh])
 
-                const user = props.users.find(x => x.uid === comments[i].creator)
-                
-                if(user == undefined){
-                    props.fetchUsersData(comments[i].creator, false)
-                } else {
-                    comments[i].user = user 
-                }
+    const matchUserToComment = (comments) => {
+        for (let i = 0; i < comments.length; i++){
+            if(comments[i].hasOwnProperty('user')){
+                continue;
             }
-            setComments(comments)
 
-        }
+            const user = props.users.find(x => x.uid === comments[i].creator)
+                
+            if(user == undefined){
+                props.fetchUsersData(comments[i].creator, false)
+            } else {
+                 comments[i].user = user 
+            }
+         }
+        setComments(comments)
+        setRefresh(false)
 
-        if(props.route.params.postId !== postId){
+    }
+    const getComments = () => {
+        if(props.route.params.postId !== postId || refresh){
             firebase.firestore()
             .collection('posts')
             .doc(props.route.params.uid)
@@ -56,8 +61,8 @@ function Comment(props) {
         } else{
             matchUserToComment(comments)
         }
+    }
 
-    }, [props.route.params.postId, props.users])
 
     const onCommentSend = () =>{
         firebase.firestore()
@@ -69,6 +74,8 @@ function Comment(props) {
             .add({
                 creator: firebase.auth().currentUser.uid,
                 text
+            }).then(() => {
+                setRefresh(true)
             })
     }
 

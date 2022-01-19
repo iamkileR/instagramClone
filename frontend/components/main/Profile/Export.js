@@ -8,12 +8,14 @@ import ProfileSc from './Profile'
 
 const Drawer = createDrawerNavigator();
 
-function logout() {
-    firebase.auth().signOut();
-    Updates.reloadAsync()
-}
 
-function Export() {
+
+export default function Export() {
+    const logout = () => {
+        firebase.auth().signOut();
+        Updates.reloadAsync()
+    }
+
     return (
         <Drawer.Navigator>
             <Drawer.Screen name="Profile" component={ProfileSc} initialParams={{ uid: firebase.auth().currentUser.uid }} />
@@ -22,13 +24,7 @@ function Export() {
     )
 }
 
-const mapStateToProps = (store) => ({
-    currentUser: store.userState.currentUser,
-    posts: store.userState.posts,
-    following: store.userState.following
-})
 
-export default connect(mapStateToProps, null)(Export)
 
 
 
