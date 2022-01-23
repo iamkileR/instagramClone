@@ -15,6 +15,7 @@ import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
 import CommentScreen from './components/main/Comment'
+import ProfileScreen from './/components/main/Profile/Profile'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -92,9 +93,9 @@ export class App extends Component {
             <Stack.Screen key={Date.now()} name="Main" component={MainScreen} navigation={this.props.navigation} options={({ route }) => {
                 const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
                 switch (routeName) {
-                  case 'MyProfile': {
+                  case 'Profile': {
                     return {
-                      headerTitle: 'Profile',
+                      //headerTitle: 'Profile',
                       headerShown: false
                     };
                   }
@@ -103,10 +104,15 @@ export class App extends Component {
                       headerTitle: 'Search',
                     };
                   }
-                  case 'Feed':
+                  case 'Feed': {
+                    return {
+                      headerTitle: 'Instagram'
+                    }
+                  }
                   default: {
                     return {
-                      headerTitle: 'Instagram',
+                      //headerTitle: 'Instagram',
+                      headerShown: false
                     };
                   }
                 }
@@ -115,6 +121,7 @@ export class App extends Component {
             <Stack.Screen key={Date.now()} name="Add" component={AddScreen} navigation={this.props.navigation}/>
             <Stack.Screen key={Date.now()} name="Save" component={SaveScreen} navigation={this.props.navigation}/>
             <Stack.Screen key={Date.now()} name="Comment" component={CommentScreen} navigation={this.props.navigation}/>
+            <Stack.Screen key={Date.now()} name="Profile" component={ProfileScreen} navigation={this.props.navigation}/>
           </Stack.Navigator>
           </View>
         </NavigationContainer>
